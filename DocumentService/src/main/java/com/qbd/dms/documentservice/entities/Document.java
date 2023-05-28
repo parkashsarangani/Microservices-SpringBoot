@@ -1,11 +1,13 @@
 package com.qbd.dms.documentservice.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Entity
 @Table(name = "Document")
 @Data
+@AllArgsConstructor
 public class Document {
 
     @Id
@@ -18,4 +20,7 @@ public class Document {
     @Column
     private Long userId;
 
+    public Document() {
+
+    }
 }
