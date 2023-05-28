@@ -14,8 +14,12 @@ public class PostService {
     @Autowired
     JSONPlaceHolderClient jsonPlaceHolderClient;
 
+    @Autowired
+    PostRepo postRepo;
+
     public Post createPost(Post post) {
         if(jsonPlaceHolderClient.createPost(post) != null) {
+            postRepo.save(post);
             return post;
         } else{
             return new Post();
@@ -44,5 +48,9 @@ public class PostService {
 
     public List<Post> viewAllPosts() {
         return jsonPlaceHolderClient.getPosts();
+    }
+
+    public List<Post> viewAllPostsByUserId(long id) {
+        return postRepo.findAllByUserId(id);
     }
 }

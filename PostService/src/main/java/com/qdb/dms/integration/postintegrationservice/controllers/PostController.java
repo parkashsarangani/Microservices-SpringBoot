@@ -49,6 +49,11 @@ public class PostController {
         return new ResponseEntity<>(postService.viewAllPosts(), HttpStatus.OK);
     }
 
+    @GetMapping("/viewAllPostsByUserId/{id}")
+    public ResponseEntity<?> viewAllPostsByUserId(@PathVariable String id) {
+        return new ResponseEntity<>(postService.viewAllPostsByUserId(Long.parseLong(id)), HttpStatus.OK);
+    }
+
     @GetMapping("/getDocument/{documentId}")
     public ResponseEntity<?> viewDocument(@PathVariable String documentId) {
         return new ResponseEntity<>(integrationService.viewDocument(Long.parseLong(documentId)), HttpStatus.OK);

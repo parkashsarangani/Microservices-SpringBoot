@@ -1,5 +1,6 @@
 package com.qdb.dms.integration.postintegrationservice.entities;
 
+import com.qdb.dms.integration.postintegrationservice.external.models.Document;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,10 +15,12 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @Column
-    private long userId;
     private long documentId;
+    @Column
+    private long userId;
     @Column
     private String title;
     @Column
     private String body;
+
 }
