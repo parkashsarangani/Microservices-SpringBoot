@@ -33,14 +33,14 @@ public class DocumentController {
         String uploadedFileExtension = StringUtils.getFilenameExtension(file.getOriginalFilename());
         if(extensionAllowed.equalsIgnoreCase(uploadedFileExtension)){
             String result = documentService.saveFile(file);
-            logger.info("PDF save request result:  {}", result);
+            logger.info("PDF save request result: " + result);
             return result;
         }else{
             throw new FileExtensionException();
         }
     }
 
-    @PutMapping(value="/updateFile/{id}")
+    @PutMapping(value="/updateFile/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String updateFile(
             @RequestPart(value = "file", required = true) MultipartFile file,
             @PathVariable String id) throws IOException {

@@ -5,17 +5,23 @@ import com.qbd.dms.documentservice.utility.PdfUtility;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.print.Doc;
 import java.io.IOException;
 
+@ExtendWith(SpringExtension.class)
 public class DocumentServiceTest {
 
     @MockBean
     PdfUtility pdfUtility;
+
+    @MockBean
+    DocumentService documentService;
 
 
     @Test
@@ -25,9 +31,20 @@ public class DocumentServiceTest {
     }
 
     @Test
-    @DisplayName("NullPointerException case")
-    public void testSaveFile() throws IOException {
-        DocumentService documentService = new DocumentService();
-        Assertions.assertThrowsExactly(NullPointerException.class,() -> documentService.saveFile(null));
+    @DisplayName("Null case")
+    public void testSaveFileNullPointer() throws IOException {
+//        Mockito.when(documentService.saveFile(null)).thenThrow(NullPointerException.class);
+
+        Assertions.assertTrue(null == documentService.saveFile(null));
+    }
+
+    @Test
+    @DisplayName("Successful case")
+    public void testSaveFileSuccess() throws IOException {
+
+        MockMultipartFile file = new MockMultipartFile("hello.pdf", "hello.pdf", MediaType.APPLICATION_PDF_VALUE, "Hello, World!".getBytes());
+        Mockito.when(documentService.saveFile(file)).thenReturn("PDF have been saved!");
+        String result = documentService.saveFile(file);
+        Assertions.assertTrue("PDF have been saved!".equalsIgnoreCase(result));
     }
 }

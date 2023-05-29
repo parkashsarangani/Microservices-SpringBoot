@@ -25,11 +25,16 @@ public class DocumentService {
 
     public String saveFile(MultipartFile file) throws IOException {
 
+        if(file == null) {
+            throw new NullPointerException();
+        }
+
         Document document = new Document();
         document.setName(file.getOriginalFilename());
         document.setUserId(1L);
         documentRepo.save(document);
         return pdfUtility.savePDF(file);
+
     }
 
     public String updateFile(MultipartFile file, Long id) throws IOException {
