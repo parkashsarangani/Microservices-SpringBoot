@@ -27,44 +27,42 @@ public class DocumentController {
     private static final String extensionAllowed = "PDF";
 
 
-    @PostMapping (value="/uploadFile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String uploadFile(@RequestPart(value = "file", required = true) MultipartFile file) throws IOException {
+    @PostMapping(value = "/uploadDocument", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String uploadDocument(@RequestPart(value = "document", required = true) MultipartFile document) throws IOException {
 
-        String uploadedFileExtension = StringUtils.getFilenameExtension(file.getOriginalFilename());
-        if(extensionAllowed.equalsIgnoreCase(uploadedFileExtension)){
-            String result = documentService.saveFile(file);
-            logger.info("PDF save request result: " + result);
+        String uploadedFileExtension = StringUtils.getFilenameExtension(document.getOriginalFilename());
+        if (extensionAllowed.equalsIgnoreCase(uploadedFileExtension)) {
+            String result = documentService.saveFile(document);
+            logger.info("Document save request result: " + result);
             return result;
-        }else{
+        } else {
             throw new FileExtensionException();
         }
     }
 
-    @PutMapping(value="/updateFile/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String updateFile(
-            @RequestPart(value = "file", required = true) MultipartFile file,
-            @PathVariable String id) throws IOException {
+    @PutMapping(value = "/updateDocument/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String updateDocument(@RequestPart(value = "document", required = true) MultipartFile file, @PathVariable String id) throws IOException {
 
         return documentService.updateFile(file, Long.parseLong(id));
     }
 
-    @GetMapping(value="/deleteFile/{id}")
-    public String deleteFile(@PathVariable String id) throws IOException {
+    @DeleteMapping(value = "/deleteDocument/{id}")
+    public String deleteDocument(@PathVariable String id) throws IOException {
         return documentService.deleteFile(Long.parseLong(id));
     }
 
-    @GetMapping(value="/getFile/{id}")
-    public ResponseEntity<?> getFile(@PathVariable String id) throws IOException {
+    @GetMapping(value = "/getDocument/{id}")
+    public ResponseEntity<?> getDocument(@PathVariable String id) throws IOException {
         return documentService.getFile(Long.parseLong(id));
     }
 
-    @GetMapping(value="/viewFile/{id}", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> viewFile(@PathVariable String id) throws IOException {
+    @GetMapping(value = "/viewDocument/{id}", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> viewDocument(@PathVariable String id) throws IOException {
         return documentService.viewFile(Long.parseLong(id));
     }
 
-    @GetMapping(value="/viewAllFiles")
-    public ResponseEntity<?> viewAllFile(){
+    @GetMapping(value = "/viewAllDocuments")
+    public ResponseEntity<?> viewAllDocuments() {
         return new ResponseEntity<>(documentService.viewAllFiles(1), HttpStatus.OK);
     }
 

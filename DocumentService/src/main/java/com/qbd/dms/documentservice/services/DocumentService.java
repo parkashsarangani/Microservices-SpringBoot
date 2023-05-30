@@ -44,12 +44,14 @@ public class DocumentService {
         document.setName(file.getOriginalFilename());
         document.setUserId(1L);
         documentRepo.save(document);
+        pdfUtility.deletePDF(id);
         return pdfUtility.savePDF(file);
     }
 
-    public String deleteFile(Long id) {
+    public String deleteFile(Long id) throws IOException {
+        String response  = pdfUtility.deletePDF(id);
         documentRepo.deleteById(id);
-        return "PDF have been deleted!";
+        return response;
     }
 
     public ResponseEntity<?> viewFile(Long id) throws IOException {
