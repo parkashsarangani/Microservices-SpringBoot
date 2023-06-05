@@ -1,7 +1,6 @@
 package com.qdb.dms.integration.postintegrationservice.controllers;
 
 import com.qdb.dms.integration.postintegrationservice.entities.Post;
-import com.qdb.dms.integration.postintegrationservice.external.services.DocumentServiceClient;
 import com.qdb.dms.integration.postintegrationservice.services.IntegrationService;
 import com.qdb.dms.integration.postintegrationservice.services.PostService;
 import org.apache.logging.log4j.LogManager;
@@ -39,9 +38,14 @@ public class PostController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping("viewPost/{id}")
+    @GetMapping("viewPostByJsonClientId/{id}")
     public ResponseEntity<?> viewPost(@PathVariable String id) {
-        return new ResponseEntity<>(postService.viewPost(Long.parseLong(id)),HttpStatus.OK);
+        return new ResponseEntity<>(postService.viewPostByJsonClientId(Long.parseLong(id)),HttpStatus.OK);
+    }
+
+    @GetMapping("viewAllPostsByDocumentId/{id}")
+    public ResponseEntity<?> viewAllPostsByDocumentId(@PathVariable String id) {
+        return new ResponseEntity<>(postService.viewPostByDocumentId(Long.parseLong(id)),HttpStatus.OK);
     }
 
     @GetMapping("/viewAllPosts")

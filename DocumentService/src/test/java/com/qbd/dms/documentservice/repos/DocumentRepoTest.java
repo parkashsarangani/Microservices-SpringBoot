@@ -30,14 +30,6 @@ public class DocumentRepoTest {
 
     @Autowired
     MockMvc mockMvc;
-    @Autowired
-    ObjectMapper mapper;
-
-    @MockBean
-    DocumentController documentController;
-
-    @MockBean
-    DocumentService documentService;
 
     @MockBean
     DocumentRepo documentRepo;

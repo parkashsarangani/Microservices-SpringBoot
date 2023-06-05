@@ -13,9 +13,9 @@ import java.util.List;
 @FeignClient(value = "documentService", url = "localhost:8081/api/document/")
 public interface DocumentServiceClient {
 
-    @RequestMapping(method = RequestMethod.GET, value = "/getFile/{id}")
+    @RequestMapping(method = RequestMethod.GET, value = "/getDocument/{id}")
     Document getDocument(@PathVariable Long id);
 
-    @RequestMapping(method = RequestMethod.GET, value = "/viewAllFiles")
+    @RequestMapping(method = RequestMethod.GET, value = "/viewAllDocuments")
     List<Document> getAllDocuments();
 }

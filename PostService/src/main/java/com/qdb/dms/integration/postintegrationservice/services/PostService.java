@@ -18,11 +18,12 @@ public class PostService {
     PostRepo postRepo;
 
     public Post createPost(Post post) {
-        if(jsonPlaceHolderClient.createPost(post) != null) {
-            postRepo.save(post);
+        Post clientPost = jsonPlaceHolderClient.createPost(post);
+        if(clientPost != null) {
+            postRepo.save(clientPost);
             return post;
         } else{
-            return new Post();
+            return null;
         }
     }
 
@@ -42,8 +43,12 @@ public class PostService {
         }
     }
 
-    public Post viewPost(Long id) {
+    public Post viewPostByJsonClientId(Long id) {
         return jsonPlaceHolderClient.getPostById(id);
+    }
+
+    public List<Post> viewPostByDocumentId(Long id) {
+        return postRepo.findAllByDocumentId(id);
     }
 
     public List<Post> viewAllPosts() {

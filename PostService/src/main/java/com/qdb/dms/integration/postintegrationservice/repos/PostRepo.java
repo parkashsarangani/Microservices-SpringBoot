@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface PostRepo extends JpaRepository<Post, Long> {
     List<Post> findAllByUserId(long userId);
+
+    List<Post> findAllByDocumentId(long documentId);
 }
